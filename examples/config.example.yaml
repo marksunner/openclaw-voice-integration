@@ -1,0 +1,48 @@
+# OpenClaw Voice Integration Configuration
+
+voice:
+  # Speech-to-text settings
+  stt:
+    provider: openai  # openai, whisper-local, deepgram
+    model: whisper-1
+    language: en
+    
+  # Text-to-speech settings
+  tts:
+    provider: openai  # openai, elevenlabs, piper
+    voice: nova       # nova, alloy, echo, fable, onyx, shimmer
+    speed: 1.0
+    
+  # Voice activity detection
+  vad:
+    provider: silero
+    threshold: 0.5
+    min_speech_ms: 250
+    min_silence_ms: 500
+
+openclaw:
+  # Connection to OpenClaw gateway
+  gateway_url: http://localhost:3000
+  api_key: ${OPENCLAW_API_KEY}
+  
+  # Agent settings
+  agent: default
+  session_persistence: true
+
+audio:
+  # Hardware settings
+  sample_rate: 16000
+  channels: 1
+  input_device: default
+  output_device: default
+  
+  # Buffer settings
+  chunk_size: 1024
+  buffer_seconds: 30
+
+features:
+  # Enable/disable features
+  interruption_handling: true
+  streaming_responses: true
+  conversation_context: true
+  ambient_awareness: false
