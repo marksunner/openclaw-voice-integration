@@ -121,7 +121,7 @@ python -m mlx_audio.tts.generate \
 
 Voice interfaces aren't just convenient — they're **essential** for many users:
 
-- **Dyslexia** — Voice reduces reading friction significantly
+- **Dyslexia** — Voice reduces reading/writing friction significantly
 - **Visual impairments** — Audio as primary output
 - **Motor limitations** — Hands-free operation
 - **Multitasking** — Eyes and hands busy elsewhere
