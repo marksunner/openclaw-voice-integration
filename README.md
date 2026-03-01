@@ -170,7 +170,7 @@ We're building portable voice capabilities now, with OpenHome as our target dest
 
 **Aporia Audiobook** — Proof of production capability:
 - [🎧 11 chapters, ~3.5 hours](https://github.com/marksunner/aporia/releases/tag/audio-chapters-v1)
-- Generated using KittenTTS
+- Generated using ElevenLabs (Archer voice)
 - Demonstrates commitment to audio accessibility
 
 ---
