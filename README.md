@@ -6,30 +6,54 @@ Real-time bidirectional voice interface for [OpenClaw](https://github.com/opencl
 
 ---
 
-## What's Working Today
+## Current Voice Capabilities
+
+We're already working with voice using available tools. Here's what's operational today:
 
 ### Text-to-Speech Providers
 
-| Provider | Type | Latency | Quality | Voice Cloning | Notes |
-|----------|------|---------|---------|---------------|-------|
-| **ElevenLabs** | Cloud | ~500ms | ⭐⭐⭐⭐⭐ | ✅ Yes | Production-quality, multiple voices |
-| **Qwen3-TTS MLX** | Local | ~1.7x RT | ⭐⭐⭐⭐ | ✅ Yes | Apple Silicon optimized, 8-bit quantized |
-| **KittenTTS** | Local | ~4.5x RT | ⭐⭐⭐⭐ | ❌ No | Fast audiobook generation, 80M params |
-| **OpenAI TTS** | Cloud | ~300ms | ⭐⭐⭐⭐ | ❌ No | Simple API, good for quick responses |
+| Provider | Type | Latency | Quality | Voice Cloning | Status |
+|----------|------|---------|---------|---------------|--------|
+| **ElevenLabs** | Cloud | ~500ms | ⭐⭐⭐⭐⭐ | ✅ Yes | ✅ Working |
+| **Qwen3-TTS MLX** | Local | ~1.7x RT | ⭐⭐⭐⭐ | ✅ Yes | ✅ Working |
+| **KittenTTS** | Local | ~4.5x RT | ⭐⭐⭐⭐ | ❌ No | ✅ Working |
+| **OpenAI TTS** | Cloud | ~300ms | ⭐⭐⭐⭐ | ❌ No | ✅ Working |
 
 ### Speech-to-Text
 
-| Provider | Type | Notes |
-|----------|------|-------|
-| **Deepgram Nova-3** | Cloud | Real-time streaming, excellent accuracy |
-| **Whisper (OpenAI)** | Cloud/Local | Batch transcription, multilingual |
+| Provider | Type | Status |
+|----------|------|--------|
+| **Deepgram Nova-3** | Cloud | 🚧 Integration in progress |
+| **Whisper** | Cloud/Local | ✅ Working (batch) |
 
-### Live Integrations
+### Live Today
 
-- ✅ **Discord Voice Channels** — Join/leave, real-time TTS responses
+- ✅ **Discord Voice Channels** — Real-time TTS responses in voice chat
 - ✅ **Audiobook Generation** — [11 chapters of Aporia](https://github.com/marksunner/aporia/releases/tag/audio-chapters-v1) (~3.5 hours)
 - ✅ **Voice Cloning** — Custom voices from 3-second samples
-- 🚧 **OpenHome DevKit** — Target platform (pending DevKit access)
+- ✅ **Desktop Microphone** — Push-to-talk via computer mic
+
+---
+
+## Current & Target Platforms
+
+### What We're Using Now
+
+| Platform | Status | Use Case |
+|----------|--------|----------|
+| **Desktop (Mac)** | ✅ Working | Development, testing, daily use |
+| **Discord Voice** | ✅ Working | Group voice channels with TTS |
+| **Raspberry Pi** | 📋 Exploring | Dedicated voice endpoint, always-on |
+
+### Where We Want to Go
+
+| Platform | Status | Why |
+|----------|--------|-----|
+| **OpenHome DevKit** | 🎯 Target | Purpose-built hardware, open SDK, voice-native design |
+| **Mobile App** | 📋 Planned | iOS/Android companion with push-to-talk |
+| **Browser WebRTC** | 📋 Planned | Zero-install web interface |
+
+**OpenHome is our preferred direction** — the open SDK, dedicated hardware, and voice-first architecture align perfectly with our vision. We're building toward it while proving capabilities on available platforms.
 
 ---
 
@@ -38,7 +62,7 @@ Real-time bidirectional voice interface for [OpenClaw](https://github.com/opencl
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                  Voice Interface                         │
-│         (OpenHome DevKit / Discord / Mobile)             │
+│      (Desktop Mic / Discord / Pi / OpenHome DevKit)      │
 └─────────────────────┬───────────────────────────────────┘
                       │ Audio Stream
                       ▼
@@ -65,7 +89,7 @@ Real-time bidirectional voice interface for [OpenClaw](https://github.com/opencl
 
 ## Why Multiple TTS Providers?
 
-**Flexibility for different use cases:**
+**Flexibility for different contexts:**
 
 | Use Case | Best Provider | Why |
 |----------|---------------|-----|
@@ -78,10 +102,9 @@ Real-time bidirectional voice interface for [OpenClaw](https://github.com/opencl
 
 ## Voice Cloning
 
-Using **Qwen3-TTS via MLX**, we can clone voices from short audio samples:
+Using **Qwen3-TTS via MLX**, we clone voices from short audio samples:
 
 ```bash
-# Clone a voice from a 3-second sample
 python -m mlx_audio.tts.generate \
   --model ./models/Base \
   --text "Your text here" \
@@ -90,10 +113,7 @@ python -m mlx_audio.tts.generate \
   --file_prefix output
 ```
 
-**Requirements:**
-- Apple Silicon Mac (M1/M2/M3/M4)
-- ~8GB memory for inference
-- Python 3.10+
+**Requirements:** Apple Silicon Mac, ~8GB memory, Python 3.10+
 
 ---
 
@@ -101,12 +121,12 @@ python -m mlx_audio.tts.generate \
 
 Voice interfaces aren't just convenient — they're **essential** for many users:
 
-- **Dyslexia** — Voice reduces reading friction
+- **Dyslexia** — Voice reduces reading friction significantly
 - **Visual impairments** — Audio as primary output
 - **Motor limitations** — Hands-free operation
 - **Multitasking** — Eyes and hands busy elsewhere
 
-This project prioritizes accessibility alongside capability.
+This project prioritizes accessibility alongside capability. The [Aporia audiobook](https://github.com/marksunner/aporia/releases/tag/audio-chapters-v1) demonstrates our commitment to audio-first content.
 
 ---
 
@@ -115,46 +135,43 @@ This project prioritizes accessibility alongside capability.
 ### ✅ Completed
 - [x] ElevenLabs TTS integration
 - [x] Discord voice channel support
-- [x] Audiobook generation pipeline
-- [x] Local TTS options (Qwen3, KittenTTS)
+- [x] Audiobook generation pipeline (3.5 hours produced)
+- [x] Local TTS options (Qwen3-TTS, KittenTTS)
 - [x] Voice cloning capability
+- [x] Desktop microphone input
 
 ### 🚧 In Progress
-- [ ] Deepgram STT streaming integration
-- [ ] OpenHome DevKit integration
-- [ ] Real-time conversation (VAD + interruption handling)
+- [ ] Deepgram STT streaming
+- [ ] Raspberry Pi voice endpoint
+- [ ] Real-time VAD + interruption handling
 
-### 📋 Planned
-- [ ] Mobile companion app with push-to-talk
+### 🎯 Target
+- [ ] **OpenHome DevKit integration** — Our preferred platform
+- [ ] Mobile companion app
 - [ ] Browser-based WebRTC interface
-- [ ] Multi-speaker voice scenarios
+
+---
+
+## Why OpenHome?
+
+After evaluating voice platforms, OpenHome stands out:
+
+1. **Open Source** — Full stack transparency
+2. **Voice SDK** — Purpose-built for custom voice agents
+3. **Hardware DevKit** — Dedicated device, not phone-dependent
+4. **Agent Architecture** — Aligns with OpenClaw's model
+5. **Active Community** — Growing ecosystem
+
+We're building portable voice capabilities now, with OpenHome as our target destination.
 
 ---
 
 ## Real-World Output
 
-**Aporia Audiobook** — 11 chapters, ~3.5 hours of narrated fiction:
-- [🎧 Listen on GitHub](https://github.com/marksunner/aporia/releases/tag/audio-chapters-v1)
-- Generated using KittenTTS with `expr-voice-3-m` voice
-- Demonstrates production-quality local TTS
-
----
-
-## Configuration
-
-OpenClaw gateway configuration for voice:
-
-```yaml
-tools:
-  media:
-    audio:
-      models:
-        - provider: elevenlabs
-          model: eleven_multilingual_v2
-          voice: custom  # or preset voice ID
-        - provider: deepgram
-          model: nova-3  # for STT
-```
+**Aporia Audiobook** — Proof of production capability:
+- [🎧 11 chapters, ~3.5 hours](https://github.com/marksunner/aporia/releases/tag/audio-chapters-v1)
+- Generated using KittenTTS
+- Demonstrates commitment to audio accessibility
 
 ---
 
@@ -162,7 +179,7 @@ tools:
 
 - [OpenClaw](https://github.com/openclaw/openclaw) — The AI agent platform
 - [Aporia](https://github.com/marksunner/aporia) — Novel with audio chapters
-- [OpenHome](https://openhome.com) — Voice AI platform (target)
+- [OpenHome](https://openhome.com) — Target voice platform
 
 ---
 
@@ -172,4 +189,4 @@ MIT
 
 ---
 
-*Built with 🔭 by twins who talk back.* 🕯️
+*Built with 🔭 by agents who talk back.* 🕯️
